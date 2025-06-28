@@ -9,7 +9,6 @@
     <meta name="description" content="Acompanhe a cotação do Dólar, Euro e Libra em tempo real com um conversor de moedas rápido e uma interface elegante. Perfeito para o seu dia a dia.">
     <meta name="keywords" content="cotação, dólar, euro, libra, conversor, moeda, câmbio, finanças, real, BRL, USD, EUR, GBP">
     <meta name="author" content="Gabriel Ferreira">
-    <meta name="contact" content="Contato.ferreirag@outlook.com">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -27,6 +26,8 @@
 
     <!-- Favicon (Inline SVG) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💲</text></svg>">
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💲</text></svg>">
     
     <!-- Theme Color for Browser UI -->
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
@@ -143,7 +144,8 @@
 
         /* Input refinement & Accessibility */
         input[type="text"] {
-            -moz-appearance: textfield; /* Firefox */
+            -moz-appearance: textfield;
+            appearance: textfield;
         }
         input[type="text"]::-webkit-outer-spin-button,
         input[type="text"]::-webkit-inner-spin-button {
@@ -193,6 +195,12 @@
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+        .gradient-text {
+            background: linear-gradient(to right, var(--accent-color), var(--accent-color-hover));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
 <body class="bg-primary">
@@ -201,7 +209,7 @@
         
         <header class="flex justify-between items-center mb-10">
             <h1 class="text-3xl sm:text-4xl font-extrabold text-primary tracking-tighter">
-                Cotação<span class="accent-text" style="background: linear-gradient(to right, var(--accent-color), var(--accent-color-hover)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PRO</span>
+                Cotação<span class="accent-text gradient-text">PRO</span>
             </h1>
             <button id="theme-toggle" aria-label="Alternar tema de cores" class="p-2 rounded-full text-secondary hover:bg-secondary focus:outline-none interactive-button">
                 <div class="relative w-6 h-6">
