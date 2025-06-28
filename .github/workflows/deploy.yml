@@ -37,13 +37,13 @@ jobs:
           lighthouse --output=json --output-path=./lighthouse-report.json --chrome-flags="--headless" https://futurodevjunior.github.io/Dolar/ || true
 
       - name: Upload Lighthouse Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: lighthouse-report
           path: lighthouse-report.json
 
       - name: Upload Pa11y Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pa11y-report
           path: pa11y-report.json
