@@ -1,0 +1,24 @@
+# Relatórios e arquivos temporários locais
+pa11y-report.html
+lighthouse-report.json
+*.log
+.DS_Store
+Thumbs.db
+
+# Node.js (caso algum comando crie por engano)
+node_modules/
+
+# Caches e arquivos de sistema
+.cache/
+*.tmp
+
+# Não ignore arquivos essenciais do projeto (HTML, CSS, JS, manifest, etc.)
+!index.html
+!manifest.json
+!sw.js
+!robots.txt
+!sitemap.xml
+!security.txt
+!security-policy.md
+!README.md
+!LICENSE 
