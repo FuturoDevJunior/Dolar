@@ -1,0 +1,48 @@
+# Configuração do GitHub Pages
+title: Cotação PRO
+description: Cotação do Dólar, Euro e Libra em Tempo Real
+url: "https://futurodevjunior.github.io"
+baseurl: "/Dolar"
+
+# Configurações de SEO
+author: Gabriel Ferreira
+email: Contato.ferreirag@outlook.com
+lang: pt-BR
+timezone: America/Sao_Paulo
+
+# Configurações de build
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+encoding: utf-8
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-compress-images
+
+# Configurações de compressão
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  blanklines: false
+  ignore:
+    envs: []
+
+# Configurações de cache
+cache_enabled: true
+cache_expiry: 86400
+
+# Configurações de segurança
+security_headers:
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: "1; mode=block"
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# Configurações de analytics (opcional)
+google_analytics: GA_MEASUREMENT_ID

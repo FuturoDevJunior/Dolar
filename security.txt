@@ -1,0 +1,8 @@
+# security.txt
+Contact: mailto:Contato.ferreirag@outlook.com
+Expires: 2025-12-31T23:59:59.000Z
+Preferred-Languages: pt-BR, en
+Canonical: https://futurodevjunior.github.io/Dolar/.well-known/security.txt
+Policy: https://futurodevjunior.github.io/Dolar/security-policy
+Encryption: https://futurodevjunior.github.io/Dolar/pgp-key.txt
+Acknowledgments: https://futurodevjunior.github.io/Dolar/hall-of-fame

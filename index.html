@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Cotação PRO | Dólar, Euro e Libra em Tempo Real</title>
+    <meta name="description" content="Acompanhe a cotação do Dólar, Euro e Libra em tempo real com um conversor de moedas rápido e uma interface elegante. Perfeito para o seu dia a dia.">
+    <meta name="keywords" content="cotação, dólar, euro, libra, conversor, moeda, câmbio, finanças, real, BRL, USD, EUR, GBP">
+    <meta name="author" content="Gabriel Ferreira">
+    <meta name="contact" content="Contato.ferreirag@outlook.com">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://futurodevjunior.github.io/Dolar/">
+    <meta property="og:title" content="Cotação PRO | Dólar, Euro e Libra em Tempo Real">
+    <meta property="og:description" content="Acompanhe a cotação do Dólar, Euro e Libra em tempo real com um conversor de moedas rápido e uma interface elegante.">
+    <meta property="og:image" content="https://placehold.co/1200x630/0f172a/38bdf8?text=Cota%C3%A7%C3%A3o%20PRO">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://futurodevjunior.github.io/Dolar/">
+    <meta property="twitter:title" content="Cotação PRO | Dólar, Euro e Libra em Tempo Real">
+    <meta property="twitter:description" content="Acompanhe a cotação do Dólar, Euro e Libra em tempo real com um conversor de moedas rápido e uma interface elegante.">
+    <meta property="twitter:image" content="https://placehold.co/1200x630/0f172a/38bdf8?text=Cota%C3%A7%C3%A3o%20PRO">
+
+    <!-- Favicon (Inline SVG) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💲</text></svg>">
+    
+    <!-- Theme Color for Browser UI -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Meta tags adicionais para GitHub Pages -->
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="msapplication-TileColor" content="#38bdf8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Cotação PRO">
+
+    <!-- Adicionar Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:;">
+
+    <!-- Preconnect para performance -->
+    <link rel="preconnect" href="https://economia.awesomeapi.com.br">
+    <link rel="dns-prefetch" href="https://economia.awesomeapi.com.br">
+
+    <!-- Manifest para PWA -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', async () => {
+          try {
+            const registration = await navigator.serviceWorker.register('/Dolar/sw.js');
+            console.log('SW registered successfully:', registration);
+          } catch (error) {
+            console.log('SW registration failed:', error);
+          }
+        });
+      }
+    </script>
+
+    <style>
+        /* * =================================================================
+         * DESIGN SYSTEM & THEME CONFIGURATION (WCAG AA/AAA COMPLIANT)
+         * =================================================================
+         */
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569; /* Darkened for better contrast */
+            --border-color: #e2e8f0;
+            --accent-color: #0369a1; /* Darkened for accessibility */
+            --accent-color-rgb: 3, 105, 161;
+            --accent-color-hover: #075985;
+            --accent-text-color: #ffffff; /* Text color on accent background */
+            --success-color: #16a34a;
+            --danger-color: #dc2626;
+        }
+
+        html.dark {
+            --bg-primary: #020617;
+            --bg-secondary: #0f172a;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --accent-color: #38bdf8;
+            --accent-color-rgb: 56, 189, 248;
+            --accent-color-hover: #7dd3fc;
+            --accent-text-color: #0f172a; /* High contrast text for dark mode */
+            --success-color: #4ade80;
+            --danger-color: #f87171;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Enhanced Interactive Elements */
+        .interactive-button {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .interactive-button:active {
+            transform: scale(0.95);
+        }
+        .currency-selector:not(.accent-bg):hover {
+            background-color: var(--border-color);
+        }
+        .card-hover {
+            transition-property: transform, box-shadow;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 300ms;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        html.dark .card-hover:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Input refinement & Accessibility */
+        input[type="text"] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+        input[type="text"]::-webkit-outer-spin-button,
+        input[type="text"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        *:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+            border-radius: 6px;
+        }
+        button:focus-visible {
+            border-radius: 9999px;
+        }
+        .currency-selector:focus-visible {
+            border-radius: 6px;
+        }
+        
+        /* High contrast text on accent background */
+        .accent-bg {
+            background-color: var(--accent-color);
+            color: var(--accent-text-color);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.5s ease-in-out forwards; }
+
+        @keyframes pulse {
+            50% { opacity: .6; }
+        }
+        .animate-pulse { animation: pulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+        @keyframes flash {
+            0%, 100% { background-color: transparent; }
+            50% { background-color: rgba(var(--accent-color-rgb), 0.1); }
+        }
+        .flash-on-update {
+            animation: flash 1.5s ease-in-out;
+        }
+
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+    </style>
+</head>
+<body class="bg-primary">
+
+    <div id="app" class="max-w-3xl mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <header class="flex justify-between items-center mb-10">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-primary tracking-tighter">
+                Cotação<span class="accent-text" style="background: linear-gradient(to right, var(--accent-color), var(--accent-color-hover)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PRO</span>
+            </h1>
+            <button id="theme-toggle" aria-label="Alternar tema de cores" class="p-2 rounded-full text-secondary hover:bg-secondary focus:outline-none interactive-button">
+                <div class="relative w-6 h-6">
+                    <svg id="theme-icon-light" class="absolute inset-0 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="theme-icon-dark" class="absolute inset-0 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </div>
+            </button>
+        </header>
+
+        <main>
+            <section aria-labelledby="currency-selection-heading">
+                <h2 id="currency-selection-heading" class="sr-only">Seleção de Moeda</h2>
+                <div class="flex space-x-2 rounded-lg bg-secondary p-1.5 border border-custom mb-8">
+                    <button data-currency="USD" class="currency-selector flex-1 py-2 px-1 text-center font-semibold rounded-md interactive-button">Dólar</button>
+                    <button data-currency="EUR" class="currency-selector flex-1 py-2 px-1 text-center font-semibold rounded-md interactive-button">Euro</button>
+                    <button data-currency="GBP" class="currency-selector flex-1 py-2 px-1 text-center font-semibold rounded-md interactive-button">Libra</button>
+                </div>
+            </section>
+
+            <!-- Main Card: Cotação -->
+            <section id="quote-card" aria-live="polite" class="bg-secondary p-6 rounded-2xl shadow-lg border border-custom mb-8 min-h-[250px] flex flex-col justify-center card-hover">
+                <!-- Skeleton Loader -->
+                <div id="skeleton-loader">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="h-7 w-48 bg-gray-300 dark:bg-slate-700 rounded-md animate-pulse"></div>
+                            <div class="h-4 w-24 bg-gray-300 dark:bg-slate-700 rounded-md mt-2 animate-pulse"></div>
+                        </div>
+                        <div class="h-7 w-20 bg-gray-300 dark:bg-slate-700 rounded-md animate-pulse"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 my-6 text-center">
+                        <div>
+                            <div class="h-4 w-20 mx-auto bg-gray-300 dark:bg-slate-700 rounded-md animate-pulse"></div>
+                            <div class="h-12 w-40 mx-auto bg-gray-300 dark:bg-slate-700 rounded-md mt-2 animate-pulse"></div>
+                        </div>
+                        <div>
+                            <div class="h-4 w-20 mx-auto bg-gray-300 dark:bg-slate-700 rounded-md animate-pulse"></div>
+                            <div class="h-12 w-40 mx-auto bg-gray-300 dark:bg-slate-700 rounded-md mt-2 animate-pulse"></div>
+                        </div>
+                    </div>
+                    <div class="h-4 w-48 mx-auto bg-gray-300 dark:bg-slate-700 rounded-md animate-pulse"></div>
+                </div>
+
+                <!-- Content (hidden by default) -->
+                <div id="quote-content" class="hidden">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 id="currency-name" class="text-xl font-bold text-primary"></h2>
+                            <p id="currency-code" class="text-sm text-secondary"></p>
+                        </div>
+                        <div id="variation-indicator" class="flex items-center text-lg font-semibold"></div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6 text-center">
+                        <div class="p-2 rounded-lg"><p class="text-secondary text-sm">Compra (BID)</p><p id="bid-price" class="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary tracking-tight"></p></div>
+                        <div class="p-2 rounded-lg"><p class="text-secondary text-sm">Venda (ASK)</p><p id="ask-price" class="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary tracking-tight"></p></div>
+                    </div>
+                    <div class="text-xs text-center text-secondary">
+                        <p>Última atualização: <span id="last-update" role="timer"></span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conversor -->
+            <section class="bg-secondary p-6 rounded-2xl shadow-lg border border-custom mb-8 card-hover" aria-labelledby="converter-heading">
+                <h3 id="converter-heading" class="font-semibold mb-4 text-lg">Conversor Rápido</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-11 gap-4 items-center">
+                    <div class="sm:col-span-5">
+                        <label id="from-currency-label" for="from-currency" class="block text-sm font-medium text-secondary mb-1"></label>
+                        <input type="text" inputmode="decimal" id="from-currency" placeholder="100.00" class="w-full p-3 bg-primary border border-custom rounded-lg focus:outline-none focus-visible:ring-2 ring-accent transition-colors">
+                    </div>
+                    <div class="text-center sm:col-span-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                        </svg>
+                    </div>
+                    <div class="sm:col-span-5">
+                        <label for="to-currency" class="block text-sm font-medium text-secondary mb-1">BRL</label>
+                        <div class="relative">
+                            <input type="text" inputmode="decimal" id="to-currency" placeholder="---,--" class="w-full p-3 bg-primary border border-custom rounded-lg focus:outline-none focus-visible:ring-2 ring-accent transition-colors pr-10">
+                            <button id="copy-button" aria-label="Copiar valor convertido" class="absolute inset-y-0 right-0 flex items-center pr-3 text-secondary hover:accent-text transition-colors interactive-button">
+                                <div id="copy-icon-wrapper" class="relative w-5 h-5">
+                                    <svg id="copy-icon" class="absolute inset-0 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    <svg id="check-icon" class="absolute inset-0 transition-all duration-300 opacity-0 scale-50 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <div id="error-message" class="hidden mt-6 bg-red-100 border-red-200 text-red-800 dark:bg-red-900/20 dark:border-red-500/30 dark:text-red-400 px-4 py-3 rounded-lg relative" role="alert">
+                <strong class="font-bold">Ops! Algo deu errado.</strong>
+                <span class="block sm:inline"> Não foi possível buscar os dados. Verifique sua conexão ou tente novamente mais tarde.</span>
+            </div>
+        </main>
+
+        <footer class="text-center mt-12 py-6 border-t border-custom">
+            <p class="text-sm text-secondary mb-2">Dados fornecidos por <a href="https://docs.awesomeapi.com.br/api-de-moedas" target="_blank" rel="noopener noreferrer" class="font-semibold accent-text hover:underline">AwesomeAPI</a>.</p>
+            <div class="flex items-center justify-center space-x-2 text-primary">
+                <p class="text-sm font-medium">Desenvolvido por <span class="font-bold">Gabriel Ferreira</span></p>
+                <a href="https://www.linkedin.com/in/DevFerreiraG/" target="_blank" rel="noopener noreferrer" class="text-secondary hover:accent-text transition-colors" aria-label="LinkedIn de Gabriel Ferreira">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"></path></svg>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // =================================================================================
+        // 1. APPLICATION MODULE
+        // Encapsulates the entire application logic to avoid polluting the global scope
+        // and follows a clean, modular architecture.
+        // =================================================================================
+        const App = (() => {
+
+            // --- 1.1. STATE & CONFIGURATION ---
+            const state = {
+                currentCurrency: 'USD',
+                quotes: {},
+                updateInterval: 300000,
+                isLoading: true,
+                copyTimeout: null,
+            };
+
+            const config = {
+                currencyDetails: {
+                    USD: { name: 'Dólar Americano', code: 'USD / BRL' },
+                    EUR: { name: 'Euro', code: 'EUR / BRL' },
+                    GBP: { name: 'Libra Esterlina', code: 'GBP / BRL' },
+                },
+                apiBaseUrl: 'https://economia.awesomeapi.com.br/json',
+            };
+
+            // --- 1.2. DOM ELEMENTS ---
+            const ui = {
+                bidPriceContainer: document.getElementById('bid-price').parentElement,
+                askPriceContainer: document.getElementById('ask-price').parentElement,
+                currencySelectors: document.querySelectorAll('.currency-selector'),
+                currencyName: document.getElementById('currency-name'),
+                currencyCode: document.getElementById('currency-code'),
+                bidPrice: document.getElementById('bid-price'),
+                askPrice: document.getElementById('ask-price'),
+                variationIndicator: document.getElementById('variation-indicator'),
+                lastUpdate: document.getElementById('last-update'),
+                fromCurrencyInput: document.getElementById('from-currency'),
+                toCurrencyInput: document.getElementById('to-currency'),
+                fromCurrencyLabel: document.getElementById('from-currency-label'),
+                copyButton: document.getElementById('copy-button'),
+                copyIcon: document.getElementById('copy-icon'),
+                checkIcon: document.getElementById('check-icon'),
+                errorMessage: document.getElementById('error-message'),
+                skeletonLoader: document.getElementById('skeleton-loader'),
+                quoteContent: document.getElementById('quote-content'),
+                themeToggle: document.getElementById('theme-toggle'),
+                themeIconLight: document.getElementById('theme-icon-light'),
+                themeIconDark: document.getElementById('theme-icon-dark'),
+            };
+
+            // --- 1.3. UTILITY FUNCTIONS ---
+            const utils = {
+                debounce(func, delay) {
+                    let timeout;
+                    return (...args) => {
+                        clearTimeout(timeout);
+                        timeout = setTimeout(() => func.apply(this, args), delay);
+                    };
+                },
+                isObject(value) {
+                    return value && typeof value === 'object' && !Array.isArray(value);
+                }
+            };
+
+            // --- 1.4. API SERVICE ---
+            const api = {
+                async fetchLatestQuotes(currencies = ['USD-BRL', 'EUR-BRL', 'GBP-BRL']) {
+                    try {
+                        const response = await fetch(`${config.apiBaseUrl}/last/${currencies.join(',')}`);
+                        if (!response.ok) throw new Error(`Network response was not ok: ${response.status}`);
+                        return await response.json();
+                    } catch (error) {
+                        console.error("API Fetch Error:", error);
+                        render.showError();
+                        return null;
+                    }
+                }
+            };
+
+            // --- 1.5. RENDERER (UI CONTROLLER) ---
+            const render = {
+                formatCurrency: (value) => parseFloat(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+                
+                animateNumber(element, finalValue) {
+                    let startValue = parseFloat(element.textContent.replace(/[R$\s,.]/g, '')) / 100 || 0;
+                    if (isNaN(startValue)) startValue = 0;
+                    const duration = 800;
+                    let startTime = null;
+
+                    const animation = (currentTime) => {
+                        if (!startTime) startTime = currentTime;
+                        const progress = Math.min((currentTime - startTime) / duration, 1);
+                        const easedProgress = 1 - Math.pow(1 - progress, 3);
+                        const currentValue = startValue + easedProgress * (finalValue - startValue);
+                        element.textContent = this.formatCurrency(currentValue);
+                        if (progress < 1) requestAnimationFrame(animation);
+                    };
+                    requestAnimationFrame(animation);
+                },
+
+                quoteDisplay(currency) {
+                    const quote = state.quotes[currency];
+                    if (!quote) return;
+
+                    const details = config.currencyDetails[currency];
+                    ui.currencyName.textContent = details.name;
+                    ui.currencyCode.textContent = details.code;
+                    
+                    this.animateNumber(ui.bidPrice, parseFloat(quote.bid));
+                    this.animateNumber(ui.askPrice, parseFloat(quote.ask));
+
+                    const variation = parseFloat(quote.pctChange);
+                    const isPositive = variation > 0;
+                    const isNegative = variation < 0;
+
+                    ui.variationIndicator.innerHTML = `
+                        <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="${isPositive ? 'M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z' : 'M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'}" clip-rule="evenodd"></path></svg>
+                        <span>${variation.toFixed(2)}%</span>`;
+                    ui.variationIndicator.className = 'flex items-center text-lg font-semibold transition-colors';
+                    if(isPositive) ui.variationIndicator.classList.add('text-success');
+                    else if(isNegative) ui.variationIndicator.classList.add('text-danger');
+                    else ui.variationIndicator.classList.add('text-secondary');
+                    
+                    ui.lastUpdate.textContent = new Date(quote.create_date).toLocaleString('pt-BR');
+                    
+                    [ui.bidPriceContainer, ui.askPriceContainer].forEach(el => {
+                        el.classList.remove('flash-on-update');
+                        void el.offsetWidth;
+                        el.classList.add('flash-on-update');
+                    });
+                },
+
+                converterLabels: (currency) => ui.fromCurrencyLabel.textContent = currency,
+                
+                activeCurrencyButton(currency) {
+                    ui.currencySelectors.forEach(button => {
+                        const isActive = button.dataset.currency === currency;
+                        button.classList.toggle('accent-bg', isActive);
+                        button.classList.toggle('text-secondary', !isActive);
+                    });
+                },
+
+                loadingState(isLoading) {
+                    state.isLoading = isLoading;
+                    ui.skeletonLoader.style.display = isLoading ? 'block' : 'none';
+                    ui.quoteContent.style.display = isLoading ? 'none' : 'block';
+                    if (!isLoading) ui.quoteContent.classList.add('fade-in');
+                },
+                
+                showError: () => ui.errorMessage.classList.remove('hidden'),
+                hideError: () => ui.errorMessage.classList.add('hidden'),
+                
+                theme() {
+                    const html = document.documentElement;
+                    const isDark = !html.classList.contains('dark');
+                    html.classList.toggle('dark', isDark);
+                    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                    
+                    const lightIcon = ui.themeIconLight; const darkIcon = ui.themeIconDark;
+                    if (isDark) {
+                        lightIcon.classList.add('opacity-0', '-rotate-90');
+                        darkIcon.classList.remove('opacity-0', 'rotate-90');
+                    } else {
+                        lightIcon.classList.remove('opacity-0', '-rotate-90');
+                        darkIcon.classList.add('opacity-0', 'rotate-90');
+                    }
+                    // Update button text color on theme change
+                    this.activeCurrencyButton(state.currentCurrency);
+                },
+                
+                initialTheme() {
+                    const savedTheme = localStorage.getItem('theme');
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    const isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+                    
+                    document.documentElement.classList.toggle('dark', isDark);
+                    if (isDark) {
+                        ui.themeIconLight.classList.add('opacity-0', '-rotate-90');
+                        ui.themeIconDark.classList.remove('opacity-0', 'rotate-90');
+                    } else {
+                        ui.themeIconLight.classList.remove('opacity-0', '-rotate-90');
+                        ui.themeIconDark.classList.add('opacity-0', 'rotate-90');
+                    }
+                }
+            };
+
+            // --- 1.6. EVENT HANDLERS & LOGIC ---
+            const handlers = {
+                async fetchAndRenderAll(isInitialLoad = false) {
+                    render.hideError();
+                    const quotesData = await api.fetchLatestQuotes();
+                    if (quotesData && utils.isObject(quotesData)) {
+                        Object.values(quotesData).forEach(quote => {
+                            if (utils.isObject(quote) && quote.code && quote.bid && quote.ask && quote.pctChange && quote.create_date) {
+                               state.quotes[quote.code] = quote;
+                            }
+                        });
+                        this.renderCurrentCurrencyData();
+                        if (isInitialLoad) {
+                            ui.fromCurrencyInput.value = '100';
+                            this.performConversion('from');
+                        }
+                    }
+                    if (isInitialLoad) render.loadingState(false);
+                },
+                
+                renderCurrentCurrencyData() {
+                    const currency = state.currentCurrency;
+                    if (!state.quotes[currency]) return;
+                    render.quoteDisplay(currency);
+                    render.converterLabels(currency);
+                    render.activeCurrencyButton(currency);
+                },
+
+                changeCurrency(newCurrency) {
+                    if(state.currentCurrency === newCurrency || state.isLoading) return;
+                    state.currentCurrency = newCurrency;
+                    this.clearConverter();
+                    this.renderCurrentCurrencyData();
+                    ui.fromCurrencyInput.value = '100';
+                    this.performConversion('from');
+                },
+                
+                numericInput(event) {
+                    const { value } = event.target;
+                    let sanitized = value.replace(/[^0-9,.]/g, '').replace(',', '.');
+                    const parts = sanitized.split('.');
+                    if (parts.length > 2) sanitized = `${parts[0]}.${parts.slice(1).join('')}`;
+                    event.target.value = sanitized;
+                },
+
+                performConversion(source) {
+                    const quote = state.quotes[state.currentCurrency];
+                    if (!quote || !quote.bid) return;
+
+                    const bidRate = parseFloat(quote.bid);
+                    const fromInput = ui.fromCurrencyInput;
+                    const toInput = ui.toCurrencyInput;
+
+                    if (source === 'from') {
+                        const fromValue = parseFloat(fromInput.value);
+                        toInput.value = (isNaN(fromValue) || fromValue <= 0) ? '' : (fromValue * bidRate).toFixed(2);
+                    } else {
+                        const toValue = parseFloat(toInput.value);
+                        fromInput.value = (isNaN(toValue) || toValue <= 0) ? '' : (toValue / bidRate).toFixed(2);
+                    }
+                },
+
+                copyToClipboard() {
+                    const value = ui.toCurrencyInput.value;
+                    if(!value || state.copyTimeout) return;
+
+                    navigator.clipboard.writeText(value).then(() => {
+                        ui.copyIcon.classList.add('opacity-0', 'scale-50');
+                        ui.checkIcon.classList.remove('opacity-0', 'scale-50');
+                        
+                        state.copyTimeout = setTimeout(() => {
+                            ui.copyIcon.classList.remove('opacity-0', 'scale-50');
+                            ui.checkIcon.classList.add('opacity-0', 'scale-50');
+                            state.copyTimeout = null;
+                        }, 2000);
+                    }).catch(err => console.error('Failed to copy text: ', err));
+                },
+                
+                clearConverter: () => {
+                    ui.fromCurrencyInput.value = '';
+                    ui.toCurrencyInput.value = '';
+                }
+            };
+
+            // --- 1.7. INITIALIZATION ---
+            const init = () => {
+                render.initialTheme();
+                
+                ui.currencySelectors.forEach(button => {
+                    button.addEventListener('click', () => handlers.changeCurrency(button.dataset.currency));
+                });
+                
+                [ui.fromCurrencyInput, ui.toCurrencyInput].forEach(input => {
+                    input.addEventListener('input', (e) => handlers.numericInput(e));
+                });
+                
+                const debouncedConversion = utils.debounce((source) => handlers.performConversion(source), 250);
+                ui.fromCurrencyInput.addEventListener('keyup', () => debouncedConversion('from'));
+                ui.toCurrencyInput.addEventListener('keyup', () => debouncedConversion('to'));
+
+                ui.copyButton.addEventListener('click', () => handlers.copyToClipboard());
+                ui.themeToggle.addEventListener('click', () => render.theme());
+
+                handlers.fetchAndRenderAll(true);
+                setInterval(() => handlers.fetchAndRenderAll(false), state.updateInterval);
+            };
+
+            return { init };
+        })();
+
+        // Start the application.
+        App.init();
+    });
+    </script>
+</body>
+</html>

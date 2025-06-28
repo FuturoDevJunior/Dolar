@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://futurodevjunior.github.io/Dolar/sitemap.xml
+
+# Contact
+Contact: Contato.ferreirag@outlook.com
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow specific paths (if needed in the future)
+# Disallow: /admin/
+# Disallow: /private/
